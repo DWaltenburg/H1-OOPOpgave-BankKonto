@@ -13,15 +13,18 @@ namespace OOPOpgave
         {
             balance = amount;
         }
-        public double Withdraw(double amount)
+        public bool Withdraw(double amount)
         {
-            if (balance > amount) { balance -= amount; }
-            return balance;
+            if (amount <= 0 || balance - amount < 0) { return false; }
+            balance -= amount;
+            return true;
+
         }
-        public double Deposit(double amount)
+        public bool Deposit(double amount)
         {
+            if (amount <= 0) { return false; }
             balance += amount;
-            return balance;
+            return true;
         }
         public double GetBalance() { return balance; }
     }

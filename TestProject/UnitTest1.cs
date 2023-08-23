@@ -7,21 +7,18 @@ namespace TestProject
         [Fact]
         public void WithdrawTest()
         {
-            //withdrawing over current balance
-            double x = 100;
-            BankAccount BA = new(x);
-            double z = 200;
-            BA.Withdraw(z);
-            double y = BA.GetBalance();
-            Assert.Equal(x, y);
+            BankAccount account = new BankAccount(1000);
+            // normal withdraw
+            Assert.True(account.Withdraw(100));
 
-            // withdrawing under current balance
-            double x2 = 100.1224;
-            BankAccount BA2 = new(x2);
-            double z2 = 50.4562;
-            BA2.Withdraw(z2);
-            double y2 = BA2.GetBalance();
-            Assert.Equal(x2 - z2, y2);
+            // withdraw negative
+            Assert.False(account.Withdraw(-100));
+
+            // withdraw zero
+            Assert.False(account.Withdraw(0));
+
+            // withdraw more than balance
+            Assert.False(account.Withdraw(1000));
         }
         [Fact]
         public void DepositTest()
@@ -31,6 +28,13 @@ namespace TestProject
             BA.Deposit(x);
             double y = BA.GetBalance();
             Assert.Equal(x, y);
+
+            // correct deposit
+            Assert.True(BA.Deposit(1000));
+
+            // wrong deposit
+            Assert.False(BA.Deposit(-1000));
+            Assert.False(BA.Deposit(0));
         }
         [Fact]
         public void GetBalanceTest()
